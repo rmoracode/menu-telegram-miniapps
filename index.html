@@ -43,8 +43,14 @@
             background: rgba(255, 255, 255, 0.03);
             backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.1);
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+            -webkit-user-select: none;
+            user-select: none;
         }
         .card:active { transform: scale(0.96); }
+        /* All children are transparent to pointer events — the card div is the only tap target */
+        .card * { pointer-events: none; }
         .card-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 1rem; }
         .icon-red {
             padding: 1rem; border-radius: 1rem;
@@ -56,7 +62,7 @@
             background: linear-gradient(to bottom right, #06b6d4, #2563eb); color: white;
             box-shadow: 0 10px 15px -3px rgba(6, 182, 212, 0.2);
         }
-        .label { font-size: 10px; font-weight: 900; letter-spacing: 0.1em; color: #06b6d4; margin-bottom: 0.25rem; text-transform: uppercase; }
+        .label { display: block; font-size: 10px; font-weight: 900; letter-spacing: 0.1em; color: #06b6d4; margin-bottom: 0.25rem; text-transform: uppercase; }
         .card h2 { font-size: 1.5rem; font-weight: 700; color: white; margin-bottom: 0.25rem; }
         .card p { font-size: 0.875rem; line-height: 1.625; color: #94a3b8; font-weight: 500; }
     </style>
@@ -79,7 +85,7 @@
         </header>
 
         <div class="cards">
-            <button onclick="launchCameraApp('https://artrade-ajemaya-production.up.railway.app/')" class="card">
+            <div class="card" id="artrade-card">
                 <div class="card-top">
                     <div class="icon-red">
                         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"
@@ -96,13 +102,13 @@
                     </svg>
                 </div>
                 <div>
-                    <p class="label">Módulo de Visión</p>
+                    <span class="label">Módulo de Visión</span>
                     <h2>Artrade</h2>
                     <p>Pulsa para abrir con permisos de cámara activados.</p>
                 </div>
-            </button>
+            </div>
 
-            <button onclick="handleLaunch('https://t.me/ajemayabot/geoaje')" class="card">
+            <div class="card" id="geo-card">
                 <div class="card-top">
                     <div class="icon-cyan">
                         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"
@@ -115,10 +121,10 @@
                     </div>
                 </div>
                 <div>
-                    <p class="label">Geolocalización</p>
+                    <span class="label">Geolocalización</span>
                     <h2>GeoAje</h2>
                 </div>
-            </button>
+            </div>
         </div>
     </div>
 
@@ -127,13 +133,13 @@
         tg.ready();
         tg.expand();
 
-        function launchCameraApp(url) {
-            tg.openLink(url);
-        }
+        document.getElementById('artrade-card').addEventListener('click', function () {
+            tg.openLink('https://artrade-ajemaya-production.up.railway.app/', { try_instant_view: false });
+        });
 
-        function handleLaunch(url) {
-            tg.openTelegramLink(url);
-        }
+        document.getElementById('geo-card').addEventListener('click', function () {
+            tg.openTelegramLink('https://t.me/ajemayabot/geoaje');
+        });
     </script>
 </body>
 </html>
