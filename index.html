@@ -3,129 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>AJECAM NORTE - Digital Hub</title>
+    <title>AJECAM HUB - AR FIX</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-        body {
-            color: #f1f5f9;
-            font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
-            overflow-x: hidden;
-            padding-bottom: 8rem;
-            -webkit-tap-highlight-color: transparent;
-            background-color: #0a0f1e;
-        }
-        .bg-layer { position: fixed; top: 0; right: 0; bottom: 0; left: 0; pointer-events: none; overflow: hidden; }
-        .glow-blob {
-            position: absolute; top: -5%; left: -5%; width: 60%; height: 60%;
-            background-color: rgba(37, 99, 235, 0.1);
-            filter: blur(120px); border-radius: 9999px;
-            animation: pulse-slow 8s infinite;
-        }
-        @keyframes pulse-slow { 0%, 100% { opacity: 0.1; } 50% { opacity: 0.2; } }
-        .wrapper { position: relative; z-index: 10; padding: 1.5rem; max-width: 36rem; margin: 0 auto; }
-        .header { display: flex; flex-direction: column; align-items: center; margin-bottom: 2.5rem; padding-top: 1.5rem; }
-        .logo {
-            position: relative; width: 5rem; height: 5rem;
-            display: flex; align-items: center; justify-content: center;
-            background-color: #161b2c; border-radius: 2rem;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-            margin-bottom: 1.5rem;
-        }
-        h1 { font-size: 1.875rem; font-weight: 900; letter-spacing: -0.05em; text-align: center; text-transform: uppercase; }
-        .accent { color: #22d3ee; }
-        .cards { display: flex; flex-direction: column; gap: 1.5rem; }
-        .card {
-            position: relative; width: 100%; display: flex; flex-direction: column;
-            padding: 1.5rem; text-align: left; border-radius: 2.5rem; cursor: pointer;
-            transition: transform 150ms cubic-bezier(0.4, 0, 0.2, 1);
+        body { background-color: #05070a; color: white; font-family: sans-serif; }
+        .cyber-card {
             background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            -webkit-tap-highlight-color: transparent;
-            touch-action: manipulation;
-            -webkit-user-select: none;
-            user-select: none;
+            border: 1px solid rgba(0, 242, 255, 0.2);
+            backdrop-filter: blur(10px);
         }
-        .card:active { transform: scale(0.96); }
-        /* All children are transparent to pointer events — the card div is the only tap target */
-        .card * { pointer-events: none; }
-        .card-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 1rem; }
-        .icon-red {
-            padding: 1rem; border-radius: 1rem;
-            background: linear-gradient(to bottom right, #dc2626, #991b1b); color: white;
-            box-shadow: 0 10px 15px -3px rgba(239, 68, 68, 0.2);
-        }
-        .icon-cyan {
-            padding: 1rem; border-radius: 1rem;
-            background: linear-gradient(to bottom right, #06b6d4, #2563eb); color: white;
-            box-shadow: 0 10px 15px -3px rgba(6, 182, 212, 0.2);
-        }
-        .label { display: block; font-size: 10px; font-weight: 900; letter-spacing: 0.1em; color: #06b6d4; margin-bottom: 0.25rem; text-transform: uppercase; }
-        .card h2 { font-size: 1.5rem; font-weight: 700; color: white; margin-bottom: 0.25rem; }
-        .card p { font-size: 0.875rem; line-height: 1.625; color: #94a3b8; font-weight: 500; }
     </style>
 </head>
-<body>
+<body class="p-6">
 
-    <div class="bg-layer">
-        <div class="glow-blob"></div>
-    </div>
-
-    <div class="wrapper">
-        <header class="header">
-            <div class="logo">
-                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24"
-                     fill="none" stroke="#22d3ee" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
-                </svg>
-            </div>
-            <h1>AJECAM <span class="accent">NORTE</span></h1>
+    <div class="max-w-md mx-auto space-y-8 pt-10">
+        <header class="text-center">
+            <h1 class="text-3xl font-black tracking-tighter text-cyan-400">AJECAM HUB</h1>
+            <p class="text-[10px] uppercase tracking-[0.3em] text-slate-500">Módulo de Realidad Aumentada</p>
         </header>
 
-        <div class="cards">
-            <div class="card" id="artrade-card">
-                <div class="card-top">
-                    <div class="icon-red">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"
-                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
-                            <circle cx="12" cy="13" r="4"/>
-                        </svg>
-                    </div>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
-                         fill="none" stroke="#64748b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
-                        <polyline points="15 3 21 3 21 9"/>
-                        <line x1="10" y1="14" x2="21" y2="3"/>
-                    </svg>
-                </div>
-                <div>
-                    <span class="label">Módulo de Visión</span>
-                    <h2>Artrade</h2>
-                    <p>Pulsa para abrir con permisos de cámara activados.</p>
-                </div>
+        <div class="cyber-card p-8 rounded-[2rem] text-center space-y-6">
+            <div class="w-20 h-20 bg-cyan-500/10 rounded-full flex items-center justify-center mx-auto border border-cyan-500/30">
+                <i data-lucide="camera" class="w-10 h-10 text-cyan-400"></i>
+            </div>
+            
+            <div class="space-y-2">
+                <h2 class="text-xl font-bold">Artrade AR</h2>
+                <p class="text-sm text-slate-400">Si ves la pantalla negra, usa el botón de abajo para forzar los permisos de cámara del sistema.</p>
             </div>
 
-            <div class="card" id="geo-card">
-                <div class="card-top">
-                    <div class="icon-cyan">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"
-                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M21.54 15H17a2 2 0 0 0-2 2v4.54"/>
-                            <path d="M7 3.34V5a3 3 0 0 0 3 3a2 2 0 0 1 2 2c0 1.1.9 2 2 2a2 2 0 0 0 2-2c0-1.1.9-2 2-2h3.17"/>
-                            <path d="M11 21.95V18a2 2 0 0 0-2-2a2 2 0 0 1-2-2v-1a2 2 0 0 0-2-2H2.05"/>
-                            <circle cx="12" cy="12" r="10"/>
-                        </svg>
-                    </div>
-                </div>
-                <div>
-                    <span class="label">Geolocalización</span>
-                    <h2>GeoAje</h2>
-                </div>
-            </div>
+            <button onclick="forceARLaunch()" class="w-full py-4 bg-cyan-500 text-black font-black rounded-2xl shadow-[0_0_20px_rgba(6,182,212,0.4)] active:scale-95 transition-all uppercase tracking-widest text-sm">
+                ACTIVAR CÁMARA Y ABRIR
+            </button>
         </div>
+
+        <p id="status-log" class="text-[9px] font-mono text-slate-600 text-center uppercase tracking-tighter"></p>
     </div>
 
     <script>
@@ -133,13 +47,34 @@
         tg.ready();
         tg.expand();
 
-        document.getElementById('artrade-card').addEventListener('click', function () {
-            tg.openLink('https://artrade-ajemaya-production.up.railway.app/', { try_instant_view: false });
-        });
+        function log(msg) {
+            document.getElementById('status-log').innerText = msg;
+        }
 
-        document.getElementById('geo-card').addEventListener('click', function () {
-            tg.openTelegramLink('https://t.me/ajemayabot/geoaje');
-        });
+        async function forceARLaunch() {
+            const url = "https://artrade-ajemaya-production.up.railway.app/";
+            log("Iniciando protocolo de cámara...");
+
+            // Paso 1: Intentar disparar el permiso nativo de Telegram
+            if (tg.requestCamera) {
+                tg.requestCamera(function(allowed) {
+                    if (allowed) {
+                        log("Permiso concedido. Abriendo navegador externo...");
+                        // Paso 2: Abrir con bypass de Instant View y forzar navegador completo
+                        tg.openLink(url, { try_instant_view: false });
+                    } else {
+                        log("Permiso denegado por usuario. Reintentando apertura directa...");
+                        tg.openLink(url, { try_instant_view: false });
+                    }
+                });
+            } else {
+                // Paso 3: Fallback para versiones viejas de Telegram
+                log("API antigua detectada. Forzando link...");
+                tg.openLink(url, { try_instant_view: false });
+            }
+        }
+
+        lucide.createIcons();
     </script>
 </body>
 </html>
