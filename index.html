@@ -54,7 +54,7 @@
 
         <div class="space-y-6">
             
-            <button onclick="launchAR()" class="group relative w-full flex flex-col p-6 glass-card rounded-[2.5rem] text-left transition-all hover:bg-white/[0.07] active:scale-[0.96]">
+            <button onclick="launchExternalAR()" class="group relative w-full flex flex-col p-6 glass-card rounded-[2.5rem] text-left transition-all hover:bg-white/[0.07] active:scale-[0.96]">
                 <div class="flex items-start justify-between mb-4">
                     <div class="p-4 rounded-2xl bg-gradient-to-br from-red-600 to-red-800 text-white shadow-lg shadow-red-500/20">
                         <i data-lucide="camera" class="w-8 h-8"></i>
@@ -70,7 +70,7 @@
                 </div>
                 <div class="mt-6 flex items-center gap-2 text-[10px] font-bold tracking-widest text-slate-500 uppercase group-hover:text-cyan-400 transition-colors">
                     <div class="w-6 h-px bg-slate-800 group-hover:bg-cyan-500/50 transition-colors"></div>
-                    ABRIR EN NAVEGADOR EXTERNO
+                    INICIAR VISIÓN 3D (FUERA DE TELEGRAM)
                 </div>
             </button>
 
@@ -120,40 +120,31 @@
     </nav>
 
     <script>
-        const tg = window.Telegram ? window.Telegram.WebApp : null;
-        
+        const tg = window.Telegram.WebApp;
+
         function init() {
-            if (tg) {
-                tg.ready();
-                tg.expand();
-            }
+            tg.ready();
+            tg.expand();
             if (window.lucide) { lucide.createIcons(); }
         }
 
-        function launchAR() {
+        // LA SOLUCIÓN DEFINITIVA: Forzar la salida de la Mini App
+        function launchExternalAR() {
             const url = "https://artrade-ajemaya-production.up.railway.app/";
-            if (tg) {
-                tg.HapticFeedback.impactOccurred('heavy');
-                // Forzamos la apertura en el navegador del sistema
-                tg.openLink(url, { try_instant_view: false });
-            } else {
-                window.open(url, '_blank');
-            }
+            tg.HapticFeedback.impactOccurred('heavy');
+            
+            // Usamos el API de Telegram para abrir un enlace externo real
+            // Esto le pedirá al usuario: "¿Abrir enlace externo?" 
+            // Al aceptar, Chrome/Safari tomará el control y la cámara funcionará.
+            tg.openLink(url); 
         }
 
         function handleLaunch(url) {
-            if (tg) {
-                tg.HapticFeedback.impactOccurred('medium');
-                tg.openTelegramLink(url);
-            } else {
-                window.open(url, '_blank');
-            }
+            tg.HapticFeedback.impactOccurred('medium');
+            tg.openTelegramLink(url);
         }
 
-        function closeApp() {
-            if (tg) tg.close();
-            else window.history.back();
-        }
+        function closeApp() { tg.close(); }
 
         window.onload = init;
     </script>
