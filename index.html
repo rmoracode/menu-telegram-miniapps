@@ -54,7 +54,9 @@
 
         <div class="space-y-6">
             
-            <button onclick="launchExternalAR()" class="group relative w-full flex flex-col p-6 glass-card rounded-[2.5rem] text-left transition-all hover:bg-white/[0.07] active:scale-[0.96]">
+            <a href="https://artrade-ajemaya-production.up.railway.app/" target="_blank" rel="noopener noreferrer" 
+               onclick="return handleARClick(this.href);"
+               class="group relative w-full flex flex-col p-6 glass-card rounded-[2.5rem] text-left transition-all hover:bg-white/[0.07] active:scale-[0.96]">
                 <div class="flex items-start justify-between mb-4">
                     <div class="p-4 rounded-2xl bg-gradient-to-br from-red-600 to-red-800 text-white shadow-lg shadow-red-500/20">
                         <i data-lucide="camera" class="w-8 h-8"></i>
@@ -70,16 +72,16 @@
                 </div>
                 <div class="mt-6 flex items-center gap-2 text-[10px] font-bold tracking-widest text-slate-500 uppercase group-hover:text-cyan-400 transition-colors">
                     <div class="w-6 h-px bg-slate-800 group-hover:bg-cyan-500/50 transition-colors"></div>
-                    INICIAR VISIÓN 3D (FUERA DE TELEGRAM)
+                    ABRIR EN EL NAVEGADOR DEL CELULAR
                 </div>
-            </button>
+            </a>
 
             <button onclick="handleLaunch('https://t.me/ajemayabot/geoaje')" class="group relative w-full flex flex-col p-6 glass-card rounded-[2.5rem] text-left transition-all hover:bg-white/[0.07] active:scale-[0.96]">
                 <div class="flex items-start justify-between mb-4">
                     <div class="p-4 rounded-2xl bg-gradient-to-br from-cyan-500 to-blue-600 text-white shadow-lg shadow-cyan-500/20">
                         <i data-lucide="globe-2" class="w-8 h-8"></i>
                     </div>
-                    <div class="text-slate-500 group-hover:text-white transition-colors">
+                    <div class="p-2 bg-white/5 rounded-full text-slate-500 group-hover:text-white transition-colors">
                         <i data-lucide="chevron-right" class="w-5 h-5"></i>
                     </div>
                 </div>
@@ -120,31 +122,36 @@
     </nav>
 
     <script>
-        const tg = window.Telegram.WebApp;
+        const tg = window.Telegram ? window.Telegram.WebApp : null;
 
         function init() {
-            tg.ready();
-            tg.expand();
+            if (tg) {
+                tg.ready();
+                tg.expand();
+            }
             if (window.lucide) { lucide.createIcons(); }
         }
 
-        // LA SOLUCIÓN DEFINITIVA: Forzar la salida de la Mini App
-        function launchExternalAR() {
-            const url = "https://artrade-ajemaya-production.up.railway.app/";
-            tg.HapticFeedback.impactOccurred('heavy');
-            
-            // Usamos el API de Telegram para abrir un enlace externo real
-            // Esto le pedirá al usuario: "¿Abrir enlace externo?" 
-            // Al aceptar, Chrome/Safari tomará el control y la cámara funcionará.
-            tg.openLink(url); 
+        // Esta función intenta usar Telegram pero si falla, deja que el link actúe solo
+        function handleARClick(url) {
+            if (tg && tg.openLink) {
+                tg.HapticFeedback.impactOccurred('heavy');
+                tg.openLink(url, { try_instant_view: false });
+                return false; // Evita que el navegador actúe si Telegram ya lo hizo
+            }
+            return true; // Si Telegram no funciona, el link se abre normalmente
         }
 
         function handleLaunch(url) {
-            tg.HapticFeedback.impactOccurred('medium');
-            tg.openTelegramLink(url);
+            if (tg) {
+                tg.HapticFeedback.impactOccurred('medium');
+                tg.openTelegramLink(url);
+            } else {
+                window.open(url, '_blank');
+            }
         }
 
-        function closeApp() { tg.close(); }
+        function closeApp() { if (tg) tg.close(); else window.history.back(); }
 
         window.onload = init;
     </script>
