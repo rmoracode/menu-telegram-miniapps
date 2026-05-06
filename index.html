@@ -3,78 +3,165 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>AJECAM HUB - AR FIX</title>
+    <title>AJECAM NORTE - Digital Hub</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
+    
     <style>
-        body { background-color: #05070a; color: white; font-family: sans-serif; }
-        .cyber-card {
+        @keyframes pulse-slow {
+            0%, 100% { opacity: 0.1; }
+            50% { opacity: 0.2; }
+        }
+        .animate-pulse-slow {
+            animation: pulse-slow 8s infinite;
+        }
+        body {
+            -webkit-tap-highlight-color: transparent;
+            background-color: #0a0f1e;
+        }
+        .glass-card {
             background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(0, 242, 255, 0.2);
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
     </style>
 </head>
-<body class="p-6">
+<body class="text-slate-100 font-sans overflow-x-hidden pb-32">
 
-    <div class="max-w-md mx-auto space-y-8 pt-10">
-        <header class="text-center">
-            <h1 class="text-3xl font-black tracking-tighter text-cyan-400">AJECAM HUB</h1>
-            <p class="text-[10px] uppercase tracking-[0.3em] text-slate-500">Módulo de Realidad Aumentada</p>
-        </header>
-
-        <div class="cyber-card p-8 rounded-[2rem] text-center space-y-6">
-            <div class="w-20 h-20 bg-cyan-500/10 rounded-full flex items-center justify-center mx-auto border border-cyan-500/30">
-                <i data-lucide="camera" class="w-10 h-10 text-cyan-400"></i>
-            </div>
-            
-            <div class="space-y-2">
-                <h2 class="text-xl font-bold">Artrade AR</h2>
-                <p class="text-sm text-slate-400">Si ves la pantalla negra, usa el botón de abajo para forzar los permisos de cámara del sistema.</p>
-            </div>
-
-            <button onclick="forceARLaunch()" class="w-full py-4 bg-cyan-500 text-black font-black rounded-2xl shadow-[0_0_20px_rgba(6,182,212,0.4)] active:scale-95 transition-all uppercase tracking-widest text-sm">
-                ACTIVAR CÁMARA Y ABRIR
-            </button>
-        </div>
-
-        <p id="status-log" class="text-[9px] font-mono text-slate-600 text-center uppercase tracking-tighter"></p>
+    <div class="fixed inset-0 pointer-events-none overflow-hidden">
+        <div class="absolute top-[-5%] left-[-5%] w-[60%] h-[60%] bg-blue-600/10 blur-[120px] rounded-full animate-pulse-slow"></div>
+        <div class="absolute bottom-[-5%] right-[-5%] w-[60%] h-[60%] bg-red-600/5 blur-[120px] rounded-full animate-pulse-slow" style="animation-delay: 3s;"></div>
     </div>
 
+    <div class="relative z-10 p-6 max-w-xl mx-auto">
+        
+        <header class="flex flex-col items-center mb-10 pt-6">
+            <div class="relative mb-6">
+                <div class="absolute -inset-2 bg-cyan-500 rounded-full blur opacity-10"></div>
+                <div class="relative w-20 h-20 flex items-center justify-center bg-[#161b2c] rounded-[2rem] border border-white/10 shadow-2xl">
+                   <svg viewBox="0 0 100 100" class="w-12 h-12 fill-cyan-400">
+                      <path d="M50 15L20 85H38L50 55L62 85H80L50 15Z" />
+                   </svg>
+                </div>
+            </div>
+            <h1 class="text-3xl font-black tracking-tighter text-center uppercase">
+                AJECAM <span class="text-cyan-400">NORTE</span>
+            </h1>
+            <p class="text-slate-400 text-[10px] font-bold tracking-[0.4em] uppercase mt-2 opacity-60 italic">Digital Hub • Ajemaya</p>
+        </header>
+
+        <div class="space-y-6">
+            
+            <button onclick="handleLaunch('https://artrade-ajemaya-production.up.railway.app/')" class="group relative w-full flex flex-col p-6 glass-card rounded-[2.5rem] text-left transition-all hover:bg-white/[0.07] active:scale-[0.96]">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="p-4 rounded-2xl bg-gradient-to-br from-red-600 to-red-800 text-white shadow-lg shadow-red-500/20">
+                        <i data-lucide="camera" class="w-8 h-8"></i>
+                    </div>
+                    <div class="p-2 bg-white/5 rounded-full text-slate-500 group-hover:text-white transition-colors">
+                        <i data-lucide="chevron-right" class="w-5 h-5"></i>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-[10px] font-black tracking-widest text-cyan-500 mb-1 uppercase">Comercial y Ejecución</h3>
+                    <h2 class="text-2xl font-bold text-white mb-1 group-hover:text-cyan-300 transition-colors">Artrade</h2>
+                    <p class="text-sm text-slate-400 leading-relaxed font-medium opacity-80">Gestión comercial y toma de pedidos con validación de cámara activa.</p>
+                </div>
+                <div class="mt-6 flex items-center gap-2 text-[10px] font-bold tracking-widest text-slate-500 uppercase group-hover:text-cyan-400 transition-colors">
+                    <div class="w-6 h-px bg-slate-800 group-hover:bg-cyan-500/50 transition-colors"></div>
+                    Lanzar Módulo Cámara
+                </div>
+            </button>
+
+            <button onclick="handleLaunch('https://t.me/ajemayabot/geoaje')" class="group relative w-full flex flex-col p-6 glass-card rounded-[2.5rem] text-left transition-all hover:bg-white/[0.07] active:scale-[0.96]">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="p-4 rounded-2xl bg-gradient-to-br from-cyan-500 to-blue-600 text-white shadow-lg shadow-cyan-500/20">
+                        <i data-lucide="globe-2" class="w-8 h-8"></i>
+                    </div>
+                    <div class="text-slate-500 group-hover:text-white transition-colors">
+                        <i data-lucide="chevron-right" class="w-5 h-5"></i>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-[10px] font-black tracking-widest text-cyan-500 mb-1 uppercase">Geolocalización</h3>
+                    <h2 class="text-2xl font-bold text-white mb-1 group-hover:text-cyan-300 transition-colors">GeoAje</h2>
+                    <p class="text-sm text-slate-400 leading-relaxed font-medium opacity-80">Seguimiento geográfico y optimización de rutas comerciales.</p>
+                </div>
+            </button>
+
+        </div>
+
+        <footer class="mt-16 flex flex-col items-center">
+            <div class="flex items-center gap-2 text-slate-600 mb-6 bg-white/5 px-4 py-2 rounded-full border border-white/5">
+                <i data-lucide="shield-check" class="w-4 h-4 text-cyan-600"></i>
+                <span class="text-[9px] font-bold tracking-widest uppercase italic">Secure Hub CAM Norte</span>
+            </div>
+            <p class="text-[8px] text-slate-700 text-center tracking-[0.2em] uppercase leading-relaxed max-w-[220px]">
+                Propiedad de Grupo AJE. Acceso exclusivo personal autorizado.
+            </p>
+        </footer>
+    </div>
+
+    <nav class="fixed bottom-8 left-1/2 -translate-x-1/2 w-[85%] max-w-sm z-50">
+        <div class="flex items-center justify-around p-3 bg-[#161b2c]/80 backdrop-blur-3xl border border-white/10 rounded-full shadow-2xl">
+            <button class="p-3 text-cyan-400 bg-white/5 rounded-full">
+                <i data-lucide="layout-grid" class="w-6 h-6"></i>
+            </button>
+            <button class="p-3 text-slate-500 hover:text-white transition-colors">
+                <i data-lucide="settings" class="w-6 h-6"></i>
+            </button>
+            <div class="w-px h-6 bg-white/10 mx-2"></div>
+            <button onclick="closeApp()" class="flex items-center gap-2 px-5 py-2 text-red-500/80 font-black text-[10px] tracking-widest hover:text-red-400 transition-colors">
+                <i data-lucide="log-out" class="w-4 h-4"></i>
+                SALIR
+            </button>
+        </div>
+    </nav>
+
     <script>
-        const tg = window.Telegram.WebApp;
-        tg.ready();
-        tg.expand();
-
-        function log(msg) {
-            document.getElementById('status-log').innerText = msg;
-        }
-
-        async function forceARLaunch() {
-            const url = "https://artrade-ajemaya-production.up.railway.app/";
-            log("Iniciando protocolo de cámara...");
-
-            // Paso 1: Intentar disparar el permiso nativo de Telegram
-            if (tg.requestCamera) {
-                tg.requestCamera(function(allowed) {
-                    if (allowed) {
-                        log("Permiso concedido. Abriendo navegador externo...");
-                        // Paso 2: Abrir con bypass de Instant View y forzar navegador completo
-                        tg.openLink(url, { try_instant_view: false });
-                    } else {
-                        log("Permiso denegado por usuario. Reintentando apertura directa...");
-                        tg.openLink(url, { try_instant_view: false });
-                    }
-                });
-            } else {
-                // Paso 3: Fallback para versiones viejas de Telegram
-                log("API antigua detectada. Forzando link...");
-                tg.openLink(url, { try_instant_view: false });
+        const tg = window.Telegram ? window.Telegram.WebApp : null;
+        
+        function init() {
+            if (tg) {
+                tg.ready();
+                tg.expand();
+                if (tg.setHeaderColor) tg.setHeaderColor('#0a0f1e');
+                if (tg.setBackgroundColor) tg.setBackgroundColor('#0a0f1e');
+                
+                // Pedir permiso de cámara al inicio (esencial para Mini Apps)
+                if (tg.requestCamera) {
+                    tg.requestCamera();
+                }
+            }
+            
+            if (window.lucide) {
+                lucide.createIcons();
             }
         }
 
-        lucide.createIcons();
+        function handleLaunch(url) {
+            if (tg) {
+                if (tg.HapticFeedback) tg.HapticFeedback.impactOccurred('medium');
+                
+                // REGLA CLAVE PARA ARTRADE (CÁMARA): 
+                // Usamos openLink para que el navegador de Telegram otorgue permisos de cámara
+                if (url.includes('railway.app')) {
+                    tg.openLink(url);
+                } else {
+                    tg.openTelegramLink(url);
+                }
+            } else {
+                window.open(url, '_blank');
+            }
+        }
+
+        function closeApp() {
+            if (tg) tg.close();
+            else window.history.back();
+        }
+
+        window.onload = init;
     </script>
 </body>
 </html>
