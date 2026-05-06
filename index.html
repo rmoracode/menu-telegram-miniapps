@@ -54,13 +54,13 @@
 
         <div class="space-y-6">
             
-            <button onclick="handleLaunch('https://artrade-ajemaya-production.up.railway.app/')" class="group relative w-full flex flex-col p-6 glass-card rounded-[2.5rem] text-left transition-all hover:bg-white/[0.07] active:scale-[0.96]">
+            <button onclick="launchAR()" class="group relative w-full flex flex-col p-6 glass-card rounded-[2.5rem] text-left transition-all hover:bg-white/[0.07] active:scale-[0.96]">
                 <div class="flex items-start justify-between mb-4">
                     <div class="p-4 rounded-2xl bg-gradient-to-br from-red-600 to-red-800 text-white shadow-lg shadow-red-500/20">
                         <i data-lucide="camera" class="w-8 h-8"></i>
                     </div>
                     <div class="p-2 bg-white/5 rounded-full text-slate-500 group-hover:text-white transition-colors">
-                        <i data-lucide="chevron-right" class="w-5 h-5"></i>
+                        <i data-lucide="external-link" class="w-5 h-5"></i>
                     </div>
                 </div>
                 <div>
@@ -70,7 +70,7 @@
                 </div>
                 <div class="mt-6 flex items-center gap-2 text-[10px] font-bold tracking-widest text-slate-500 uppercase group-hover:text-cyan-400 transition-colors">
                     <div class="w-6 h-px bg-slate-800 group-hover:bg-cyan-500/50 transition-colors"></div>
-                    Lanzar Realidad Aumentada
+                    ABRIR EN NAVEGADOR EXTERNO
                 </div>
             </button>
 
@@ -126,31 +126,25 @@
             if (tg) {
                 tg.ready();
                 tg.expand();
-                if (tg.setHeaderColor) tg.setHeaderColor('#0a0f1e');
-                if (tg.setBackgroundColor) tg.setBackgroundColor('#0a0f1e');
-                
-                // Pedir permiso de cámara al inicio (esencial para Mini Apps)
-                if (tg.requestCamera) {
-                    tg.requestCamera();
-                }
             }
-            
-            if (window.lucide) {
-                lucide.createIcons();
+            if (window.lucide) { lucide.createIcons(); }
+        }
+
+        function launchAR() {
+            const url = "https://artrade-ajemaya-production.up.railway.app/";
+            if (tg) {
+                tg.HapticFeedback.impactOccurred('heavy');
+                // Forzamos la apertura en el navegador del sistema
+                tg.openLink(url, { try_instant_view: false });
+            } else {
+                window.open(url, '_blank');
             }
         }
 
         function handleLaunch(url) {
             if (tg) {
-                if (tg.HapticFeedback) tg.HapticFeedback.impactOccurred('medium');
-                
-                // REGLA CRITICA PARA ARTRADE (CÁMARA): 
-                // Usamos openLink con bypass de Instant View para forzar permisos de hardware
-                if (url.includes('railway.app')) {
-                    tg.openLink(url, { try_instant_view: false });
-                } else {
-                    tg.openTelegramLink(url);
-                }
+                tg.HapticFeedback.impactOccurred('medium');
+                tg.openTelegramLink(url);
             } else {
                 window.open(url, '_blank');
             }
