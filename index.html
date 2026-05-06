@@ -64,13 +64,13 @@
                     </div>
                 </div>
                 <div>
-                    <h3 class="text-[10px] font-black tracking-widest text-cyan-500 mb-1 uppercase">Comercial y Ejecución</h3>
-                    <h2 class="text-2xl font-bold text-white mb-1 group-hover:text-cyan-300 transition-colors">Artrade</h2>
-                    <p class="text-sm text-slate-400 leading-relaxed font-medium opacity-80">Gestión comercial y toma de pedidos con validación de cámara activa.</p>
+                    <h3 class="text-[10px] font-black tracking-widest text-cyan-500 mb-1 uppercase">Ejecución de Éxito</h3>
+                    <h2 class="text-2xl font-bold text-white mb-1 group-hover:text-cyan-300 transition-colors">Artrade AR</h2>
+                    <p class="text-sm text-slate-400 leading-relaxed font-medium opacity-80">Realidad Aumentada para montaje de elementos 3D en PDV. Guía visual para la fuerza de ventas.</p>
                 </div>
                 <div class="mt-6 flex items-center gap-2 text-[10px] font-bold tracking-widest text-slate-500 uppercase group-hover:text-cyan-400 transition-colors">
                     <div class="w-6 h-px bg-slate-800 group-hover:bg-cyan-500/50 transition-colors"></div>
-                    Lanzar Módulo Cámara
+                    Lanzar Realidad Aumentada
                 </div>
             </button>
 
@@ -144,10 +144,10 @@
             if (tg) {
                 if (tg.HapticFeedback) tg.HapticFeedback.impactOccurred('medium');
                 
-                // REGLA CLAVE PARA ARTRADE (CÁMARA): 
-                // Usamos openLink para que el navegador de Telegram otorgue permisos de cámara
+                // REGLA CRITICA PARA ARTRADE (CÁMARA): 
+                // Usamos openLink con bypass de Instant View para forzar permisos de hardware
                 if (url.includes('railway.app')) {
-                    tg.openLink(url);
+                    tg.openLink(url, { try_instant_view: false });
                 } else {
                     tg.openTelegramLink(url);
                 }
