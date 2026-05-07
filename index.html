@@ -26,10 +26,15 @@
             -webkit-backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
+        .card-active:active {
+            transform: scale(0.96);
+            background: rgba(255, 255, 255, 0.08);
+        }
     </style>
 </head>
 <body class="text-slate-100 font-sans overflow-x-hidden pb-32">
 
+    <!-- Background Elements -->
     <div class="fixed inset-0 pointer-events-none overflow-hidden">
         <div class="absolute top-[-5%] left-[-5%] w-[60%] h-[60%] bg-blue-600/10 blur-[120px] rounded-full animate-pulse-slow"></div>
         <div class="absolute bottom-[-5%] right-[-5%] w-[60%] h-[60%] bg-red-600/5 blur-[120px] rounded-full animate-pulse-slow" style="animation-delay: 3s;"></div>
@@ -37,6 +42,7 @@
 
     <div class="relative z-10 p-6 max-w-xl mx-auto">
         
+        <!-- Header -->
         <header class="flex flex-col items-center mb-10 pt-6">
             <div class="relative mb-6">
                 <div class="absolute -inset-2 bg-cyan-500 rounded-full blur opacity-10"></div>
@@ -52,11 +58,13 @@
             <p class="text-slate-400 text-[10px] font-bold tracking-[0.4em] uppercase mt-2 opacity-60 italic">Digital Hub • Ajemaya</p>
         </header>
 
-        <div class="space-y-6">
+        <!-- Main Menu Grid -->
+        <div class="grid grid-cols-1 gap-6">
             
+            <!-- 1. Artrade AR -->
             <a href="https://artrade-ajemaya-production.up.railway.app/" target="_blank" rel="noopener noreferrer" 
-               onclick="return handleARClick(this.href);"
-               class="group relative w-full flex flex-col p-6 glass-card rounded-[2.5rem] text-left transition-all hover:bg-white/[0.07] active:scale-[0.96]">
+               onclick="return handleExternalLink(this.href);"
+               class="group relative w-full flex flex-col p-6 glass-card rounded-[2.5rem] text-left transition-all hover:bg-white/[0.07] card-active">
                 <div class="flex items-start justify-between mb-4">
                     <div class="p-4 rounded-2xl bg-gradient-to-br from-red-600 to-red-800 text-white shadow-lg shadow-red-500/20">
                         <i data-lucide="camera" class="w-8 h-8"></i>
@@ -70,15 +78,12 @@
                     <h2 class="text-2xl font-bold text-white mb-1 group-hover:text-cyan-300 transition-colors">Artrade AR</h2>
                     <p class="text-sm text-slate-400 leading-relaxed font-medium opacity-80">Realidad Aumentada para montaje de elementos 3D en PDV. Guía visual para la fuerza de ventas.</p>
                 </div>
-                <div class="mt-6 flex items-center gap-2 text-[10px] font-bold tracking-widest text-slate-500 uppercase group-hover:text-cyan-400 transition-colors">
-                    <div class="w-6 h-px bg-slate-800 group-hover:bg-cyan-500/50 transition-colors"></div>
-                    ABRIR EN EL NAVEGADOR DEL CELULAR
-                </div>
             </a>
 
-            <button onclick="handleLaunch('https://t.me/ajemayabot/geoaje')" class="group relative w-full flex flex-col p-6 glass-card rounded-[2.5rem] text-left transition-all hover:bg-white/[0.07] active:scale-[0.96]">
+            <!-- 2. GeoAje (Moved to 2nd position) -->
+            <button onclick="handleLaunch('https://t.me/ajemayabot/geoaje')" class="group relative w-full flex flex-col p-6 glass-card rounded-[2.5rem] text-left transition-all hover:bg-white/[0.07] card-active">
                 <div class="flex items-start justify-between mb-4">
-                    <div class="p-4 rounded-2xl bg-gradient-to-br from-cyan-500 to-blue-600 text-white shadow-lg shadow-cyan-500/20">
+                    <div class="p-4 rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-600 text-white shadow-lg shadow-emerald-500/20">
                         <i data-lucide="globe-2" class="w-8 h-8"></i>
                     </div>
                     <div class="p-2 bg-white/5 rounded-full text-slate-500 group-hover:text-white transition-colors">
@@ -86,14 +91,53 @@
                     </div>
                 </div>
                 <div>
-                    <h3 class="text-[10px] font-black tracking-widest text-cyan-500 mb-1 uppercase">Geolocalización</h3>
-                    <h2 class="text-2xl font-bold text-white mb-1 group-hover:text-cyan-300 transition-colors">GeoAje</h2>
-                    <p class="text-sm text-slate-400 leading-relaxed font-medium opacity-80">Seguimiento geográfico y optimización de rutas comerciales.</p>
+                    <h3 class="text-[10px] font-black tracking-widest text-emerald-500 mb-1 uppercase">Geolocalización</h3>
+                    <h2 class="text-2xl font-bold text-white mb-1 group-hover:text-emerald-300 transition-colors">GeoAje</h2>
+                    <p class="text-sm text-slate-400 leading-relaxed font-medium opacity-80">Seguimiento geográfico y optimización de rutas comerciales en tiempo real.</p>
                 </div>
             </button>
 
+            <!-- 3. AI Voice Agent (Jarvis) -->
+            <a href="https://ajemaya-voice-agent.bjcel2.easypanel.host/" target="_blank" rel="noopener noreferrer" 
+               onclick="return handleExternalLink(this.href);"
+               class="group relative w-full flex flex-col p-6 glass-card rounded-[2.5rem] text-left transition-all hover:bg-white/[0.07] card-active border-cyan-500/20">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="p-4 rounded-2xl bg-gradient-to-br from-blue-500 to-cyan-400 text-white shadow-lg shadow-cyan-500/20">
+                        <i data-lucide="mic" class="w-8 h-8"></i>
+                    </div>
+                    <div class="p-2 bg-white/5 rounded-full text-slate-500 group-hover:text-white transition-colors">
+                        <i data-lucide="sparkles" class="w-5 h-5"></i>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-[10px] font-black tracking-widest text-cyan-500 mb-1 uppercase">Inteligencia Artificial</h3>
+                    <h2 class="text-2xl font-bold text-white mb-1 group-hover:text-cyan-300 transition-colors">Agente de Voz IA</h2>
+                    <p class="text-sm text-slate-400 leading-relaxed font-medium opacity-80">Asistente inteligente tipo Jarvis. Comunicación fluida por voz para soporte y consultas.</p>
+                </div>
+            </a>
+
+            <!-- 4. AI Real Agent (Avatar) -->
+            <a href="https://ajemaya-real-agent-ia.bjcel2.easypanel.host/" target="_blank" rel="noopener noreferrer" 
+               onclick="return handleExternalLink(this.href);"
+               class="group relative w-full flex flex-col p-6 glass-card rounded-[2.5rem] text-left transition-all hover:bg-white/[0.07] card-active border-indigo-500/20">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="p-4 rounded-2xl bg-gradient-to-br from-indigo-600 to-purple-600 text-white shadow-lg shadow-indigo-500/20">
+                        <i data-lucide="user-round" class="w-8 h-8"></i>
+                    </div>
+                    <div class="p-2 bg-white/5 rounded-full text-slate-500 group-hover:text-white transition-colors">
+                        <i data-lucide="video" class="w-5 h-5"></i>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-[10px] font-black tracking-widest text-indigo-400 mb-1 uppercase">Avatar Hiperrealista</h3>
+                    <h2 class="text-2xl font-bold text-white mb-1 group-hover:text-indigo-300 transition-colors">Agente Real IA</h2>
+                    <p class="text-sm text-slate-400 leading-relaxed font-medium opacity-80">Interacción visual con un avatar humanoide. La evolución de la atención personalizada.</p>
+                </div>
+            </a>
+
         </div>
 
+        <!-- Footer Info -->
         <footer class="mt-16 flex flex-col items-center">
             <div class="flex items-center gap-2 text-slate-600 mb-6 bg-white/5 px-4 py-2 rounded-full border border-white/5">
                 <i data-lucide="shield-check" class="w-4 h-4 text-cyan-600"></i>
@@ -105,7 +149,8 @@
         </footer>
     </div>
 
-    <nav class="fixed bottom-8 left-1/2 -translate-x-1/2 w-[85%] max-w-sm z-50">
+    <!-- Navigation Bar -->
+    <nav class="fixed bottom-8 left-1/2 -translate-x-1/2 w-[90%] max-w-sm z-50">
         <div class="flex items-center justify-around p-3 bg-[#161b2c]/80 backdrop-blur-3xl border border-white/10 rounded-full shadow-2xl">
             <button class="p-3 text-cyan-400 bg-white/5 rounded-full">
                 <i data-lucide="layout-grid" class="w-6 h-6"></i>
@@ -128,18 +173,20 @@
             if (tg) {
                 tg.ready();
                 tg.expand();
+                tg.headerColor = '#0a0f1e';
+                tg.backgroundColor = '#0a0f1e';
             }
             if (window.lucide) { lucide.createIcons(); }
         }
 
-        // Esta función intenta usar Telegram pero si falla, deja que el link actúe solo
-        function handleARClick(url) {
+        // Manejo de enlaces externos para asegurar apertura en navegador
+        function handleExternalLink(url) {
             if (tg && tg.openLink) {
-                tg.HapticFeedback.impactOccurred('heavy');
+                tg.HapticFeedback.impactOccurred('medium');
                 tg.openLink(url, { try_instant_view: false });
-                return false; // Evita que el navegador actúe si Telegram ya lo hizo
+                return false; 
             }
-            return true; // Si Telegram no funciona, el link se abre normalmente
+            return true;
         }
 
         function handleLaunch(url) {
@@ -151,7 +198,14 @@
             }
         }
 
-        function closeApp() { if (tg) tg.close(); else window.history.back(); }
+        function closeApp() { 
+            if (tg) {
+                tg.HapticFeedback.notificationOccurred('warning');
+                tg.close();
+            } else {
+                window.history.back();
+            }
+        }
 
         window.onload = init;
     </script>
